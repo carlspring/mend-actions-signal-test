@@ -1,0 +1,37 @@
+name: 'Setup Mend.io CLI'
+description: 'Action to download and install the Mend.io CLI'
+
+inputs:
+  mend_cli_version:
+    description: 'Specific version of the Mend.io CLI to install'
+    required: false
+    default: 'latest'
+
+outputs:
+  mend_path:
+    description: 'Path to the installed Mend CLI'
+  mend_version:
+    description: 'The version of the installed Mend CLI'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Download The Mend.io CLI
+      run: |
+        CLI_URL=https://downloads.mend.io/cli/linux_amd64/mend
+        curl -L $CLI_URL -o mend
+        chmod +x mend
+      shell: bash
+
+    - name: Add Mend CLI to PATH
+      run: |
+        echo "mend_path=$(pwd)/mend" >> $GITHUB_ENV
+        echo "$(pwd)" >> $GITHUB_PATH
+      shell: bash
+
+    - name: Check Mend CLI Version
+      run: |
+        mend_version=$(`pwd`/mend version | cut -d ':' -f 2)
+        echo "${mend_version}"
+        echo "mend_version=${mend_version}" >> $GITHUB_ENV
+      shell: bash

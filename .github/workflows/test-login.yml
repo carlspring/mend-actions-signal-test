@@ -1,0 +1,39 @@
+name: Test the login action
+
+on:
+  pull_request:
+    branches:
+      - master
+  push:
+    branches:
+      - master
+    paths:
+      - login/**
+      - .github/workflows/test-login.yml
+
+env:
+  MEND_URL: ${{ secrets.MEND_URL }}
+  MEND_ORGANIZATION: ${{ secrets.MEND_ORGANIZATION }}
+#  MEND_ORGANIZATION_KEY: ${{ secrets.MEND_ORGANIZATION_KEY }}
+  MEND_USER_KEY: ${{ secrets.MEND_USER_KEY }}
+  MEND_EMAIL: ${{ secrets.MEND_EMAIL }}
+
+jobs:
+  mend-login-test:
+    runs-on: ubuntu-latest
+
+    permissions:
+      actions: read
+      contents: read
+      pull-requests: read
+      security-events: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Mend CLI
+        uses: ./setup
+
+      - name: Run Mend.io Login Action
+        uses: ./login

@@ -1,0 +1,20 @@
+name: 'Log into Mend.io using the CLI'
+description: 'Action to log into Mend.io using the CLI'
+
+# This action requires the following environment variables to be set in the invoking Github workflow in order to
+# be able to authenticate securely without storing the credentials on the file system:
+#
+# env:
+#   MEND_URL: ${{ secrets.MEND_URL }}
+#   MEND_ORGANIZATION: ${{ secrets.MEND_ORGANIZATION }}
+#   MEND_ORGANIZATION_KEY: ${{ secrets.MEND_ORGANIZATION_KEY }}
+#   MEND_USER_KEY: ${{ secrets.MEND_USER_KEY }}
+#   MEND_EMAIL: ${{ secrets.MEND_EMAIL }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Log into Mend.io using CLI
+      shell: bash
+      run: |
+        mend auth info --non-interactive
