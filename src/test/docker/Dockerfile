@@ -1,4 +1,4 @@
-FROM ubuntu:24.04
+FROM ubuntu:24.04@sha256:89ef6e43e57cb94a23e4b28715a34444de91f45bd410fce3ce00819f86940a9c
 
 LABEL Description="This is Docker image with some intentional vulnerabilities for testing purposes."
 LABEL authors="martin.steve.todorov@sap.com"
